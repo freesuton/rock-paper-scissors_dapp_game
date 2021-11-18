@@ -17,15 +17,15 @@ contract RockPaperScissors {
     mapping(string => mapping(string => uint256)) private winner;
 
     constructor()  {
-        winner['Rock']['Rock'] = 0;
-        winner['Rock']['Paper'] = 2;
-        winner['Rock']['Scissor'] = 1;
-        winner['Paper']['Paper'] = 0;
-        winner['Paper']['Scissor'] = 2;
-        winner['Paper']['Rock'] = 1;
-        winner['Scissor']['Scissor'] = 0;
-        winner['Scissor']['Rock'] = 2;
-        winner['Scissor']['Paper'] = 1;
+        winner['Rock']['Rock'] = 1;
+        winner['Rock']['Paper'] = 3;
+        winner['Rock']['Scissor'] = 2;
+        winner['Paper']['Paper'] = 1;
+        winner['Paper']['Scissor'] = 3;
+        winner['Paper']['Rock'] = 2;
+        winner['Scissor']['Scissor'] = 1;
+        winner['Scissor']['Rock'] = 3;
+        winner['Scissor']['Paper'] = 2;
 
         stake = 0.01 ether;
     }
@@ -53,6 +53,11 @@ contract RockPaperScissors {
 
     }
 
+    //show the choice of player
+    function showChoice() public view returns(string memory) {
+        return  choiceofPlayer1;
+    }
+
     //show the result of game
     function showResult() external view returns(uint256){
         return winner[choiceofPlayer1][choiceofPlayer2];
@@ -61,12 +66,12 @@ contract RockPaperScissors {
     //finish the game
     function finishGame() external payable{
         uint256 result = winner[choiceofPlayer1][choiceofPlayer2];
-        if(result == 0){
+        if(result == 1){
             player1.transfer(stake);
             player2.transfer(stake);
-        }else if(result == 1){
-            player1.transfer(address(this).balance);
         }else if(result == 2){
+            player1.transfer(address(this).balance);
+        }else if(result == 3){
             player2.transfer(address(this).balance);
         }
 
@@ -100,6 +105,10 @@ contract RockPaperScissors {
 
     function test2() external pure returns(uint256 ){
         return 1;
+    }
+
+    function test3() public view returns(string memory) {
+        return  "d";
     }
 
     function testChoice() external view returns(string memory){
